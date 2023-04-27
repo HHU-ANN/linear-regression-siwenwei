@@ -19,9 +19,45 @@ def ridge(data):
     weight=np.dot(np.linalg.inv(np.dot(X.T,X)+a*np.eye(X.shape[1])),np.dot(X.T,y))
     return weight@data
 
-    
+def sign(x):
+    if x>0:
+        return 1
+    elif x<0:
+        return -1
+    else:
+        return 0
+
 def lasso(data):
-    return ridge(data)
+    X,y=read_data()
+    a=0.03
+    w=np.zeros((X.shape[1]))
+    b=0
+    learning_rate=0.5
+
+    loss_list=[]
+    epochs=5
+    for i in range(1,epochs):
+        y_hat = np.dot(X, w) + b
+        loss = np.sum((y_hat - y) ** 2) / X.shape[0] + np.sum(a * abs(w))
+        dw = np.dot(X.T, (y_hat - y)) / X.shape[0] + a * np.vectorize(sign)(w)
+        db = np.sum((y_hat - y)) / X.shape[0]
+        w+=-learning_rate*dw
+        b+=-learning_rate*db
+        loss_list.append(loss)
+        if i%5==0:
+            params={
+                'w':w,
+                'b':b
+            }
+            grads={
+                'dw':dw,
+                'db':db
+            }
+    w=params['w']
+    b=params['b']
+    y_pred = np.dot(X,w)+b
+    return y_pred
+
 
 
 def read_data(path='./data/exp02/'):
