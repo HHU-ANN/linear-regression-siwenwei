@@ -30,7 +30,7 @@ def sign(x):
 def lasso(data):
     X,y=read_data()
     a=0.03
-    w=np.zeros((X.shape[1]))
+    w=np.zeros((X.shape[1]),1)
     b=0
     learning_rate=0.5
 
