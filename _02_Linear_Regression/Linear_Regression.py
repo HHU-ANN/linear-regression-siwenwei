@@ -36,6 +36,10 @@ def lasso(data):
 
     loss_list=[]
     epochs=5
+    params = {
+        'w': w,
+        'b': b
+    }
     for i in range(1,epochs):
         y_hat = np.dot(X, w) + b
         loss = np.sum((y_hat - y) ** 2) / X.shape[0] + np.sum(a * abs(w))
@@ -48,10 +52,6 @@ def lasso(data):
             params={
                 'w':w,
                 'b':b
-            }
-            grads={
-                'dw':dw,
-                'db':db
             }
     w=params['w']
     b=params['b']
