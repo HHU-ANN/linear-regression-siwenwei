@@ -29,15 +29,15 @@ def sign(x):
 
 def lasso(data):
     X,y=read_data()
-    print(X.shape[1])
-    a=0.03
+    #print(X.shape[1])
+    a=0.01
     w=np.zeros(X.shape[1])
-    print(w)
+    #print(w)
     b=0
-    learning_rate=0.5
+    learning_rate=0.00000001
 
     loss_list=[]
-    epochs=5
+    epochs=10
     params = {
         'w': w,
         'b': b
@@ -50,8 +50,7 @@ def lasso(data):
         w+=-learning_rate*dw
         b+=-learning_rate*db
         loss_list.append(loss)
-        if i%5==0:
-            params={
+        params={
                 'w':w,
                 'b':b
             }
@@ -63,10 +62,8 @@ def lasso(data):
 
 
 
-def read_data(path='../data/exp02/'):
+def read_data(path='./data/exp02/'):
     x = np.load(path + 'X_train.npy')
     y = np.load(path + 'y_train.npy')
     return x, y
-data=[1,2,3,4,5,6]
 
-print(lasso(data))
