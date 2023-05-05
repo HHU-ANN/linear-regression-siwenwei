@@ -1,8 +1,8 @@
 # 最终在main函数中传入一个维度为6的numpy数组，输出预测值
-from matplotlib import pyplot as plt
+
 import os
 import math
-import math
+
 try:
     import numpy as np
 except ImportError as e:
