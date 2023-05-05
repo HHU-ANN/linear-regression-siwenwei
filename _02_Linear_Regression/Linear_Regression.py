@@ -17,18 +17,18 @@ def ridge(data):
     #2.根据算法求解weight
     #Xw=y
     a=0.5
-    add11=X[:,4]*X[:,5]
+    add11 = X[:, 0] * X[:, 1]
     add12=X[:,2]*X[:,3]
-    add13=X[:,0]*X[:,1]
-    X=np.column_stack((X,add11,add12,add13))
-    X=np.concatenate((np.ones((404, 1)), X), axis=1)
+
+    X=np.column_stack((X,add11,add12))
+    X=np.column_stack((X,np.ones(X.shape[0])))
     weight=np.dot(np.linalg.inv(np.dot(X.T,X)+a*np.eye(X.shape[1])),np.dot(X.T,y))
-    add21=data[:,4]*data[:,5]
-    add22=data[:,2]*data[:,3]
-    add23=data[:,0]*data[:,1]
-    data=np.column_stack((data,add21,add22,add23))
-    data=np.concatenate((np.ones((10,1)),data),axis=1)
-    return data@weight
+    add21=data[0]*data[1]
+    add22=data[2]*data[3]
+
+    data=np.append(data,[add21,add22,1])
+
+    return weight@data
 
 
 
@@ -55,15 +55,15 @@ def lasso(data):
     num_train = X.shape[0]
 
 
-    add23 = data[:,0] * data[:,3]/10
-    add24 = data[:, 1] * data[:, 2]/10
-    add25 = data[:, 1] * data[:, 3]/10
-    add26 = data[:, 1] * data[:, 4]/10
-    add27 = data[:, 2] * data[:, 3]/10
-    add28 = data[:, 2] * data[:, 4]/10
-    add29 = data[:, 3] * data[:, 5]/10
+    add23 = data[0] * data[3]/10
+    add24 = data[1] * data[2]/10
+    add25 = data[1] * data[3]/10
+    add26 = data[1] * data[4]/10
+    add27 = data[2] * data[3]/10
+    add28 = data[2] * data[4]/10
+    add29 = data[3] * data[5]/10
 
-    data=np.column_stack((data,add23,add24,add25,add26,add27,add28,add29))
+    data=np.append(data,[add23,add24,add25,add26,add27,add28,add29])
 
 
     epochs=500000
@@ -76,13 +76,9 @@ def lasso(data):
 
 
 
-
-def read_data(path='./data/exp02/'):
+def read_data(path='../data/exp02/'):
     x = np.load(path + 'X_train.npy')
     y = np.load(path + 'y_train.npy')
     return x, y
-
-
-
 
 
